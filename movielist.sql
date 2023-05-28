@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16/05/2023 às 21:39
+-- Tempo de geração: 29/05/2023 às 00:52
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.0.28
 
@@ -26,6 +26,19 @@ USE `movielist`;
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `comentarios`
+--
+
+CREATE TABLE `comentarios` (
+  `id` int(11) NOT NULL,
+  `menssagem` text NOT NULL,
+  `idFilme` int(11) NOT NULL,
+  `idUsername` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `filmes`
 --
 
@@ -36,19 +49,8 @@ CREATE TABLE `filmes` (
   `anoLancamento` year(4) DEFAULT NULL,
   `poster` varchar(255) DEFAULT NULL,
   `trailer` varchar(255) DEFAULT NULL,
-  `assistido` tinyint(1) DEFAULT 0,
   `dataCadastro` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `filmes`
---
-
-INSERT INTO `filmes` (`id`, `titulo`, `generoId`, `anoLancamento`, `poster`, `trailer`, `assistido`, `dataCadastro`) VALUES
-(3, 'Vingadores: Ultimato', 1, '2019', 'View/images/vingadores.jpg', 'https://www.youtube.com/watch?v=TcMBFSGVi1c', 0, '2023-04-15 01:16:57'),
-(4, 'Deadpool 2', 2, '2018', 'View/images/deadpool2.jpg', 'https://www.youtube.com/watch?v=20bpjtCbCz0', 1, '2023-04-15 01:16:57'),
-(6, 'Interestelar', 4, '2014', 'View/images/interestelar.jpg', 'https://www.youtube.com/watch?v=0vxOhd4qlnA', 0, '2023-04-15 01:16:57'),
-(7, 'Batman: O Cavaleiro das Trevas', 1, '2008', 'View/images/batman.jpg', 'https://www.youtube.com/watch?v=EXeTwQWrcwY', 0, '2023-04-15 01:18:17');
 
 -- --------------------------------------------------------
 
@@ -61,33 +63,66 @@ CREATE TABLE `generos` (
   `nome` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Despejando dados para a tabela `generos`
+-- Estrutura para tabela `meus_filmes`
 --
 
-INSERT INTO `generos` (`id`, `nome`) VALUES
-(1, 'Comédia'),
-(2, 'Ação'),
-(3, 'Drama'),
-(4, 'Suspense'),
-(5, 'Ficção científica');
+CREATE TABLE `meus_filmes` (
+  `usuarios_username` varchar(45) NOT NULL,
+  `filmes_id` int(11) NOT NULL,
+  `assistido` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
+-- Índices de tabela `comentarios`
+--
+ALTER TABLE `comentarios`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comentarios_ibfk_1` (`idFilme`),
+  ADD KEY `comentarios_ibfk_2` (`idUsername`);
+
+--
 -- Índices de tabela `filmes`
 --
 ALTER TABLE `filmes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `genero_id` (`generoId`);
+  ADD KEY `filmes_ibfk_1` (`generoId`);
 
 --
 -- Índices de tabela `generos`
 --
 ALTER TABLE `generos`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `meus_filmes`
+--
+ALTER TABLE `meus_filmes`
+  ADD PRIMARY KEY (`usuarios_username`,`filmes_id`),
+  ADD KEY `fk_usuarios_has_filmes_filmes1` (`filmes_id`);
+
+--
+-- Índices de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`username`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -110,10 +145,24 @@ ALTER TABLE `generos`
 --
 
 --
+-- Restrições para tabelas `comentarios`
+--
+ALTER TABLE `comentarios`
+  ADD CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`idFilme`) REFERENCES `filmes` (`id`),
+  ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`idUsername`) REFERENCES `usuarios` (`username`);
+
+--
 -- Restrições para tabelas `filmes`
 --
 ALTER TABLE `filmes`
   ADD CONSTRAINT `filmes_ibfk_1` FOREIGN KEY (`generoId`) REFERENCES `generos` (`id`);
+
+--
+-- Restrições para tabelas `meus_filmes`
+--
+ALTER TABLE `meus_filmes`
+  ADD CONSTRAINT `fk_usuarios_has_filmes_filmes1` FOREIGN KEY (`filmes_id`) REFERENCES `filmes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_usuarios_has_filmes_usuarios1` FOREIGN KEY (`usuarios_username`) REFERENCES `usuarios` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
