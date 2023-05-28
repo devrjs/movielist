@@ -33,6 +33,7 @@
                             <input type="hidden" name="filme-id" value="<?= $filme->getId() ?>">
                             <button type="submit" name="deletar-filme" class="btn btn btn-danger">Excluir</button>
                         </form>
+
                     </div>
                 </div>
             </div>

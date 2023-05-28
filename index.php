@@ -1,6 +1,7 @@
 <?php
 
 include 'Controller/FilmeController.php';
+include 'Controller/UsuarioController.php';
 
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $base_path = dirname($_SERVER['SCRIPT_NAME']);
@@ -11,12 +12,22 @@ include 'View/layouts/header.php';
 
 switch ($url) {
     case '/':
-        FilmeController::index();
+        UsuarioController::login();
+
+        break;
+
+    case '/nao-assistidos':
+        FilmeController::naoAssistido();
 
         break;
 
     case '/filmes':
         FilmeController::listarFilmes();
+
+        break;
+
+    case '/filme':
+        FilmeController::visualizarFilme();
 
         break;
 
@@ -56,4 +67,4 @@ switch ($url) {
         break;
 }
 
-include 'View/layouts/footer.php';
+include 'View/layouts/endBody.php';

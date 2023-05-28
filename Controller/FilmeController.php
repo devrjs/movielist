@@ -2,14 +2,16 @@
 
 class FilmeController
 {
-    public static function index()
+    public static function naoAssistido()
     {
         include 'Model/FilmeModel.php';
 
         $filmes = new FilmeModel();
         $filmes->getFilmesNaoAssisidos();
 
+        include 'View/layouts/navbar.php';
         include 'View/modules/naoAssistidoFilme.php';
+        include 'View/layouts/footer.php';
     }
 
     public static function listarFilmes()
@@ -23,7 +25,31 @@ class FilmeController
         $generos = new GeneroModel();
         $generos->getAllGeneros();
 
+        include 'View/layouts/navbar.php';
         include 'View/modules/listaFilme.php';
+        include 'View/layouts/footer.php';
+    }
+
+    public static function visualizarFilme()
+    {
+        include 'Model/FilmeModel.php';
+        include 'Model/GeneroModel.php';
+
+        if (isset($_GET['id'])) {
+            $filme = new FilmeModel();
+            $filme->buscarFilme((int) $_GET['id']);
+        } else {
+            echo 'ID do filme não encontrado.';
+        }
+
+        $filme = $filme->data;
+        
+        $generos = new GeneroModel();
+        $generos->getAllGeneros();
+
+        include 'View/layouts/navbar.php';
+        include 'View/modules/visualizarFilme.php';
+        include 'View/layouts/footer.php';
     }
 
     public static function adicionarFilme()
@@ -33,7 +59,9 @@ class FilmeController
         $generos = new GeneroModel();
         $generos->getAllGeneros();
 
+        include 'View/layouts/navbar.php';
         include 'View/modules/adicionarFilme.php';
+        include 'View/layouts/footer.php';
     }
 
     public static function salvarFilme()
@@ -87,7 +115,9 @@ class FilmeController
         $generos = new GeneroModel();
         $generos->getAllGeneros();
 
+        include 'View/layouts/navbar.php';
         include 'View/modules/editarFilme.php';
+        include 'View/layouts/footer.php';
     }
 
     public static function marcarAssistidoFilme()
