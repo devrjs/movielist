@@ -59,7 +59,7 @@ class FilmeDAO
 
     public function select()
     {
-        $sql = 'SELECT filmes.id, filmes.titulo, generos.nome as genero, filmes.anoLancamento, filmes.poster, filmes.trailer, filmes.assistido, filmes.dataCadastro, filmes.generoId
+        $sql = 'SELECT filmes.id, filmes.titulo, generos.nome as genero, filmes.anoLancamento, filmes.poster, filmes.trailer, filmes.dataCadastro, filmes.generoId
         FROM filmes INNER JOIN generos ON filmes.generoId = generos.id ORDER BY generos.nome, filmes.anoLancamento';
 
         $stmt = $this->conexao->prepare($sql);

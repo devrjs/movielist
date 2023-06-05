@@ -12,8 +12,33 @@ include 'View/layouts/header.php';
 
 switch ($url) {
     case '/':
+        UsuarioController::index();
+
+        break;
+
+    case '/cadastro':
+        UsuarioController::cadastro();
+
+        break;
+
+    case '/forgot':
+        UsuarioController::forgot();
+
+        break;    
+        
+
+    case '/cadastroAction':
+        UsuarioController::cadastroAction();
+    
+        break;    
+
+    case '/login':
         UsuarioController::login();
 
+        break;
+            
+    case '/forgot-password':
+        UsuarioController::forgotPassword();
         break;
 
     case '/nao-assistidos':

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29/05/2023 às 00:52
+-- Tempo de geração: 05/06/2023 às 03:23
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.0.28
 
@@ -33,7 +33,7 @@ CREATE TABLE `comentarios` (
   `id` int(11) NOT NULL,
   `menssagem` text NOT NULL,
   `idFilme` int(11) NOT NULL,
-  `idUsername` varchar(45) NOT NULL
+  `idUsername` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -70,7 +70,7 @@ CREATE TABLE `generos` (
 --
 
 CREATE TABLE `meus_filmes` (
-  `usuarios_username` varchar(45) NOT NULL,
+  `usuarios_username` int(11) NOT NULL,
   `filmes_id` int(11) NOT NULL,
   `assistido` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -82,7 +82,9 @@ CREATE TABLE `meus_filmes` (
 --
 
 CREATE TABLE `usuarios` (
-  `username` varchar(45) NOT NULL,
+  `id` int(11) NOT NULL,
+  `nome_completo` varchar(45) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -122,7 +124,7 @@ ALTER TABLE `meus_filmes`
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -141,6 +143,12 @@ ALTER TABLE `generos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Restrições para tabelas despejadas
 --
 
@@ -149,7 +157,7 @@ ALTER TABLE `generos`
 --
 ALTER TABLE `comentarios`
   ADD CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`idFilme`) REFERENCES `filmes` (`id`),
-  ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`idUsername`) REFERENCES `usuarios` (`username`);
+  ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`idUsername`) REFERENCES `usuarios` (`id`);
 
 --
 -- Restrições para tabelas `filmes`
@@ -162,7 +170,7 @@ ALTER TABLE `filmes`
 --
 ALTER TABLE `meus_filmes`
   ADD CONSTRAINT `fk_usuarios_has_filmes_filmes1` FOREIGN KEY (`filmes_id`) REFERENCES `filmes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usuarios_has_filmes_usuarios1` FOREIGN KEY (`usuarios_username`) REFERENCES `usuarios` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_usuarios_has_filmes_usuarios1` FOREIGN KEY (`usuarios_username`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
