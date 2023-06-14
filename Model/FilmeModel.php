@@ -107,7 +107,38 @@ class FilmeModel
 
         $dao = new FilmeDAO();
 
-        $this->data = $dao->selectByNaoAssistido();
+        $meusFilmes = array();
+
+        foreach ($dao->selectByMeusFilmes() as $meuFilme) {
+            foreach ($dao->select() as $filme) {
+                if ($filme->id == $meuFilme->filmes_id and $meuFilme->assistido = 0) {
+                    $meusFilmes[] = $filme;
+                    break;
+                }
+            }
+        }
+
+        $this->data = $meusFilmes;
+    }
+
+    public function getMeusFilmes()
+    {
+        include 'DAO/FilmeDAO.php';
+
+        $dao = new FilmeDAO();
+
+        $meusFilmes = array();
+
+        foreach ($dao->selectByMeusFilmes() as $meuFilme) {
+            foreach ($dao->select() as $filme) {
+                if ($filme->id == $meuFilme->filmes_id) {
+                    $meusFilmes[] = $filme;
+                    break;
+                }
+            }
+        }
+
+        $this->data = $meusFilmes;
     }
 
     public function save()

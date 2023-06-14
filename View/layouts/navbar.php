@@ -8,7 +8,10 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link" href="nao-assistidos">Início</a>
+						<a class="nav-link" href="nao-assistidos">Não Assistidos</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="meus-filmes">Meus Filmes</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="filmes">Lista de Filmes</a>

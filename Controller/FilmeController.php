@@ -14,6 +14,27 @@ class FilmeController
         include 'View/layouts/footer.php';
     }
 
+    public static function meusFilmes()
+    {
+        include 'Model/FilmeModel.php';
+        include 'Model/GeneroModel.php';
+
+        $filmes = new FilmeModel();
+        $filmes->getMeusFilmes();
+
+        $generos = new GeneroModel();
+        $generos->getAllGeneros();
+
+        include 'View/layouts/navbar.php';
+        include 'View/modules/meuFilme.php';
+        include 'View/layouts/footer.php';
+    }
+
+    public static function addMeuFilme()
+    {
+        
+    }
+
     public static function listarFilmes()
     {
         include 'Model/FilmeModel.php';

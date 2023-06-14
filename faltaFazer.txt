@@ -1,7 +1,0 @@
-pagina meu filmes
-pagina dos comentarios
-
-pagina listar filmes botao para adicionar em meus filmes
-sessao do usuario
-nao deixar acessar quando deslogado
-cadastro

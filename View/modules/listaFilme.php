@@ -22,18 +22,15 @@
                         <p class="card-text"><strong>Ano de Lançamento:</strong> <?= $filme->getAnoLancamento() ?></p>
                         <p class="card-text"><strong>Data de Cadastro:</strong> <?= $filme->getDataCadastro() ?></p>
                         <a href="filme?id=<?= $filme->getId() ?>" class="btn btn-primary">Ver mais</a>
-                        <?php if(!$filme->getAssistido()): ?>
-                            <form method="POST" action="./editar-filme/assistido?id=<?= $filme->getId() ?>" class="d-inline">
-                                <input type="hidden" name="filme-id" value="<?= $filme->getId() ?>">
-                                <button type="submit" name="filme-assistido" class="btn btn btn-success">Assistido</button>
-                            </form>
-                        <?php endif; ?>
+                        <form method="POST" action="./addmeu-filme?id=<?= $filme->getId() ?>" class="d-inline">
+                            <input type="hidden" name="filme-id" value="<?= $filme->getId() ?>">
+                            <button type="submit" name="filme-assistido" class="btn btn btn-info">Add Minha Lista</button>
+                        </form>
                         <a href="editar-filme?id=<?= $filme->getId() ?>" class="btn btn-secondary">Editar</a>
                         <form method="POST" action="./excluir-filme?id=<?= $filme->getId() ?>" class="d-inline">
                             <input type="hidden" name="filme-id" value="<?= $filme->getId() ?>">
                             <button type="submit" name="deletar-filme" class="btn btn btn-danger">Excluir</button>
                         </form>
-
                     </div>
                 </div>
             </div>

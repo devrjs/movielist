@@ -2,45 +2,20 @@
 
 class UsuarioModel {
 
-    private $conexao;
-    private $id;
-    private $nome_completo;
-    private $email;
+    private $username;
     private $password;
+    public $data = [];
   
-    public function __construct($conexao) {
-      $this->conexao = $conexao;
-    }
-  
-    public function getId()
+    public function getUsername()
     {
-        return $this->id;
+        return $this->username;
     }
 
-    public function setId($id)
+    public function setUsername($username)
     {
-        $this->id = $id;
+        $this->username = $username;
     }
-
-    public function getNomeCompleto()
-    {
-        return $this->nome_completo;
-    }
-
-    public function setNomeCompleto($nome_completo)
-    {
-        $this->nome = $nome_completo;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
+    
     public function getPassword()
     {
         return $this->password;
@@ -51,17 +26,11 @@ class UsuarioModel {
         $this->password = $password;
     }
 
-    
-      /*
-      public function insertUser($nome_completo, $email, $password) {
-        $query = "INSERT INTO usuarios (nome_completo, email, password) VALUES (:nome_completo, :email, :password)";
-        $stmt = $this->conexao->prepare($query);
-        $stmt->bindParam(':nome_completo', $nome_completo);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $stmt->execute();
-        return $this->conexao->lastInsertId();
-      }
-      */
+    public function signIn(string $username, string $password){
+        include 'DAO/UsuarioDAO.php';
 
+        $dao = new UsuarioDAO();
+
+        $this->data = $dao->selectByUsername($username, $password);
     }
+}

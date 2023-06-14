@@ -51,7 +51,9 @@ class FilmeDAO
         $sql = 'UPDATE filmes SET assistido = 1 WHERE id = ?';
 
         $stmt = $this->conexao->prepare($sql);
+
         $stmt->bindValue(1, $id);
+
         $stmt->execute();
 
         return $stmt->fetchObject('FilmeModel');
@@ -78,12 +80,27 @@ class FilmeDAO
         return $stmt->fetchAll(PDO::FETCH_CLASS, 'FilmeModel');
     }
 
+    public function selectByMeusFilmes()
+    {
+        $sql = 'SELECT * FROM `meus_filmes` WHERE usuarios_username = ?';
+
+        $stmt = $this->conexao->prepare($sql);
+
+        $stmt->bindValue(1, $_SESSION['username']);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'FilmeModel');
+    }
+
     public function selectById(int $id)
     {
         $sql = 'SELECT * FROM filmes WHERE id = ?';
 
         $stmt = $this->conexao->prepare($sql);
+
         $stmt->bindValue(1, $id);
+        
         $stmt->execute();
 
         return $stmt->fetchObject('FilmeModel');

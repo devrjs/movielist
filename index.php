@@ -8,44 +8,54 @@ $base_path = dirname($_SERVER['SCRIPT_NAME']);
 
 $url = str_replace($base_path, '', $url);
 
+if(!isset($_SESSION)){
+    session_start();
+}
+
 include 'View/layouts/header.php';
 
 switch ($url) {
     case '/':
-        UsuarioController::index();
+        if(isset($_SESSION['username'])){
+            header('Location: ./filmes');
+            exit();
+        }
+
+        include 'View/modules/loginUsuario.php';
 
         break;
 
-    case '/cadastro':
-        UsuarioController::cadastro();
+    case '/signin':
+        if(isset($_SESSION['username'])){
+            header('Location: ./filmes');
+            exit();
+        }
+
+        UsuarioController::signIn();
 
         break;
 
-    case '/forgot':
-        UsuarioController::forgot();
-
-        break;    
-        
-
-    case '/cadastroAction':
-        UsuarioController::cadastroAction();
-    
-        break;    
-
-    case '/login':
-        UsuarioController::login();
-
+    // Redireciona para pagina inicial se nao houver sessao
+    case !isset($_SESSION['username']):
+        header('Location: ./');
         break;
-            
-    case '/forgot-password':
-        UsuarioController::forgotPassword();
-        break;
+    //===================
 
     case '/nao-assistidos':
         FilmeController::naoAssistido();
 
         break;
+   
+    case '/meus-filmes':
+        FilmeController::meusFilmes();
+        
+        break;
 
+    case '/addmeu-filme':
+        FilmeController::addMeuFilme();
+
+        break;
+            
     case '/filmes':
         FilmeController::listarFilmes();
 
