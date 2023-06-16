@@ -35,11 +35,35 @@ switch ($url) {
 
         break;
 
+    case '/cadastro':
+        if(isset($_SESSION['username'])){
+            header('Location: ./filmes');
+            exit();
+        }
+
+        include 'View/modules/signup.php';
+
+        break;
+        
+    case '/cadastro-action':
+        if(isset($_SESSION['username'])){
+            header('Location: ./filmes');
+            exit();
+        }
+
+        UsuarioController::cadastroAction();
+
+        break;
+
     // Redireciona para pagina inicial se nao houver sessao
     case !isset($_SESSION['username']):
         header('Location: ./');
         break;
     //===================
+
+    case '/deslogar':
+        UsuarioController::deslogar();
+
 
     case '/nao-assistidos':
         FilmeController::naoAssistido();

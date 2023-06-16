@@ -12,5 +12,6 @@
     Entrar
     </button>
 </form>
+<a href="./cadastro" class="bg-warning text-black mt-4 p-2 rounded">Não possui conta? faça seu cadastro!</a>
 <p class="mt-5 mb-3 text-white">&copy; 2023</p>
 </div>

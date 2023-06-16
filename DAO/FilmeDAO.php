@@ -59,6 +59,21 @@ class FilmeDAO
         return $stmt->fetchObject('FilmeModel');
     }
 
+    public function insertMeusFilmes(int $id)
+    {
+        $sql = 'INSERT INTO meus_filmes (usuarios_username, filmes_id)
+                VALUES (?, ?)';
+
+        $stmt = $this->conexao->prepare($sql);
+
+        $stmt->bindValue(1, $_SESSION['username']);
+        $stmt->bindValue(2, $id);
+
+        $stmt->execute();
+
+        return $stmt->fetchObject('FilmeModel');
+    }
+
     public function select()
     {
         $sql = 'SELECT filmes.id, filmes.titulo, generos.nome as genero, filmes.anoLancamento, filmes.poster, filmes.trailer, filmes.dataCadastro, filmes.generoId

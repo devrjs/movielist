@@ -19,6 +19,9 @@
 					<li class="nav-item">
 						<a class="nav-link" href="adicionar-filme">Adicionar Filme</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="deslogar">DESLOGAR</a>
+					</li>
 				</ul>
 			</div>
 		</div>

@@ -32,7 +32,16 @@ class FilmeController
 
     public static function addMeuFilme()
     {
+        include 'Model/FilmeModel.php';
+
+        if (isset($_GET['id'])) {
+            $filme = new FilmeModel();
+            $filme->setMeusFilmes((int) $_GET['id']);
+        } else {
+            echo 'ID do filme não encontrado.';
+        }
         
+        header('Location: ./meus-filmes');
     }
 
     public static function listarFilmes()

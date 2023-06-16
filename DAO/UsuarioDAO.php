@@ -10,6 +10,21 @@ class UsuarioDAO
 
         $this->conexao = new PDO($dsn, 'root', '');
     }
+
+    public function insert(string $username, string $password)
+    {
+        $sql = 'INSERT INTO usuarios (username, password)
+                VALUES (?, ?)';
+
+        $stmt = $this->conexao->prepare($sql);
+
+        $stmt->bindValue(1, $username);
+        $stmt->bindValue(2, $password);
+
+        $stmt->execute();
+
+        return $stmt->fetchObject('UsuarioModel');
+    }
     
     public function selectByUsername(string $username, string $password)
     {

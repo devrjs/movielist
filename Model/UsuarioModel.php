@@ -33,4 +33,12 @@ class UsuarioModel {
 
         $this->data = $dao->selectByUsername($username, $password);
     }
+
+    public function signUp(string $username, string $password){
+        include 'DAO/UsuarioDAO.php';
+
+        $dao = new UsuarioDAO();
+
+        $this->data = $dao->insert($username, $password);
+    }
 }

@@ -141,6 +141,15 @@ class FilmeModel
         $this->data = $meusFilmes;
     }
 
+    public function setMeusFilmes($id)
+    {
+        include 'DAO/FilmeDAO.php';
+
+        $dao = new FilmeDAO();
+
+        $dao->insertMeusFilmes($id);
+    }
+
     public function save()
     {
         include 'DAO/FilmeDAO.php';
